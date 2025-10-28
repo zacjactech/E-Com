@@ -94,8 +94,8 @@ vibe-commerce-cart/
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
-   cd vibe-commerce-cart
+   git clone https://github.com/zacjactech/E-Com.git
+   cd E-Com
    ```
 
 2. **Install all dependencies**
