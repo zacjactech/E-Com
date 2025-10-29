@@ -1,17 +1,45 @@
-# Vibe Commerce - Mock E-Commerce Cart
+# 🛒 Vibe Commerce - E-Commerce Shopping Cart
 
-A full-stack shopping cart application demonstrating modern e-commerce flows with product browsing, cart management, and mock checkout functionality.
+A modern, full-stack shopping cart application built with React, Node.js, and SQLite. Features product browsing, cart management with image thumbnails, and a complete mock checkout flow.
 
-## 🎯 Overview
+![Vibe Commerce](./frontend/public/screenshots/banner.png)
 
-This project showcases a complete e-commerce cart implementation with:
+## 📸 Screenshots
 
-- Product catalog browsing
-- Add/remove items to/from cart
-- Quantity management with real-time totals
-- Mock checkout flow with receipt generation
-- Persistent cart state across sessions
-- Responsive, mobile-first UI
+<div align="center">
+
+### Product Catalog
+![Product Grid](./frontend/public/screenshots/home.png)
+*Browse 10 tech products with high-quality images from Unsplash*
+
+### Shopping Cart
+![Shopping Cart](./frontend/public/screenshots/cart.png)
+*Manage cart items with product thumbnails, quantity controls, and real-time totals*
+
+### Checkout & Receipt
+![Checkout](./frontend/public/screenshots/checkout.png)
+*Complete mock checkout with receipt generation*
+
+</div>
+
+## ✨ Features
+
+### Core Functionality
+- 🛍️ **Product Catalog** - Browse 10 tech products with images, prices, and descriptions
+- 🛒 **Shopping Cart** - Add/remove items with quantity controls
+- 🖼️ **Product Thumbnails** - Visual cart items with 80x80px images
+- 💰 **Real-time Totals** - Automatic calculation of subtotals and totals
+- 📦 **Mock Checkout** - Complete order flow with receipt generation
+- 💾 **Persistent State** - Cart data saved in SQLite database
+- 📱 **Responsive Design** - Mobile-first UI that works on all devices
+
+### Technical Features
+- ⚡ **Fast Development** - Vite for instant HMR
+- 🧪 **Comprehensive Testing** - 28 tests with Jest and Vitest
+- 🔒 **Secure** - Helmet for security headers, CORS protection
+- 🎨 **Clean Code** - ESLint + Prettier for code quality
+- 🚀 **CI/CD Ready** - GitHub Actions workflow included
+- 🗄️ **Database Isolation** - Separate test database for safe testing
 
 ## 🛠 Tech Stack
 
@@ -82,70 +110,112 @@ vibe-commerce-cart/
 └── package.json                # Root scripts
 ```
 
-## 🚀 Getting Started
+## 🚀 Quick Start Guide
 
 ### Prerequisites
 
-- **Node.js 18+** and npm
-- Git
+Before you begin, ensure you have installed:
+- **Node.js 18+** ([Download here](https://nodejs.org/))
+- **npm** (comes with Node.js)
+- **Git** ([Download here](https://git-scm.com/))
 
-### Installation & Setup
+### Step-by-Step Installation
 
-1. **Clone the repository**
+#### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/zacjactech/E-Com.git
+cd E-Com
+```
 
-   ```bash
-   git clone https://github.com/zacjactech/E-Com.git
-   cd E-Com
-   ```
+#### 2️⃣ Install Dependencies
 
-2. **Install all dependencies**
+**Quick method:**
+```bash
+npm run install:all
+```
 
-   ```bash
-   npm run install:all
-   ```
+**Manual method:**
+```bash
+# Install root dependencies
+npm install
 
-   Or manually:
+# Install backend dependencies
+cd backend
+npm install
 
-   ```bash
-   npm install
-   cd backend && npm install
-   cd ../frontend && npm install
-   ```
+# Install frontend dependencies
+cd ../frontend
+npm install
+cd ..
+```
 
-3. **Setup backend**
+#### 3️⃣ Setup Backend & Database
 
-   ```bash
-   cd backend
-   cp .env.example .env
-   npx prisma migrate dev --name init
-   npm run seed
-   ```
+```bash
+cd backend
 
-4. **Run the application**
+# Copy environment configuration
+cp .env.example .env
 
-   From the root directory:
+# Run database migrations
+npx prisma migrate dev
 
-   ```bash
-   npm run dev
-   ```
+# Seed database with 10 products
+npm run seed
+```
 
-   This starts both backend (port 4000) and frontend (port 5173) concurrently.
+✅ You should see:
+```
+✅ Seeded 10 products
+📦 Products in database:
+   1. Wireless Headphones - $79.99
+   2. Smart Watch - $199.99
+   3. Laptop Stand - $34.99
+   ...
+```
 
-   Or run separately:
+#### 4️⃣ Start the Application
 
-   ```bash
-   # Terminal 1 - Backend
-   cd backend
-   npm run dev
+**Option A: Run both servers together (Recommended)**
+```bash
+# From root directory
+npm run dev
+```
 
-   # Terminal 2 - Frontend
-   cd frontend
-   npm run dev
-   ```
+**Option B: Run servers separately**
+```bash
+# Terminal 1 - Backend API (port 4000)
+cd backend
+npm run dev
 
-5. **Open your browser**
+# Terminal 2 - Frontend UI (port 5173)
+cd frontend
+npm run dev
+```
 
-   Navigate to `http://localhost:5173`
+#### 5️⃣ Open in Browser
+
+Navigate to **http://localhost:5173** 🎉
+
+You should see the product catalog with 10 tech products!
+
+### Verify Installation
+
+Check that everything is working correctly:
+
+```bash
+# Test backend health
+curl http://localhost:4000/health
+# Expected: {"status":"ok","timestamp":"..."}
+
+# Test products API
+curl http://localhost:4000/api/products
+# Expected: JSON array with 10 products
+
+# Run all tests
+npm test
+# Expected: 28 tests passing ✅
+```
 
 ## 🧪 Testing
 
@@ -360,46 +430,191 @@ Set `USE_FAKE_STORE_API=true` in backend `.env` to fetch products from `https://
 - Payment gateway integration
 - Admin dashboard
 
-## 💡 Design Decisions
+## 💡 How It Works
 
-### Currency Handling
+### Application Flow
 
-Prices are stored as **cents** (integers) in the database to avoid floating-point precision issues. The frontend formats them as currency using `Intl.NumberFormat`.
+```
+1. User visits homepage → Fetches products from API
+2. User clicks "Add to Cart" → POST /api/cart
+3. Backend updates cart in database → Returns updated cart
+4. User navigates to cart → GET /api/cart
+5. User adjusts quantities → POST /api/cart (upsert)
+6. User proceeds to checkout → Enters name/email
+7. User submits order → POST /api/checkout
+8. Backend generates receipt → Clears cart → Returns receipt
+9. User sees receipt modal → Can return to shopping
+```
 
-### State Management
+### Key Design Decisions
 
-The **backend is the source of truth** for cart state. The frontend fetches fresh data after mutations to ensure consistency. Optimistic UI updates could be added for better UX.
+#### 💰 Currency Handling
+Prices are stored as **cents** (integers) in the database to avoid floating-point precision issues common with decimal arithmetic in JavaScript.
 
-### User Identification
+```javascript
+// Database: 7999 cents
+// Display: $79.99 (formatted with Intl.NumberFormat)
+```
 
-Uses a simple `X-User-Id` header for demo purposes. In production, this would be replaced with proper authentication (JWT, sessions, etc.).
+**Why?** Prevents errors like `0.1 + 0.2 = 0.30000000000000004`
 
-### Database Choice
+#### 🔄 State Management
+The **backend is the source of truth** for all cart data. The frontend always fetches fresh data after mutations.
 
-SQLite via Prisma provides a lightweight, zero-config database perfect for local development and demos. For production, migrate to PostgreSQL or MySQL.
+**Benefits:**
+- Consistent state across devices/tabs
+- No sync issues
+- Server-side validation
+- Easy to add real-time updates later
 
-### Testing Strategy
+**Trade-off:** Slightly more network requests, but ensures data integrity
 
-- **Backend**: Unit tests for services, integration tests for API endpoints
-- **Frontend**: Component tests for UI interactions, integration tests for user flows
+#### 👤 User Identification
+Uses a simple `X-User-Id` header (defaults to "demo-user") for demo purposes.
 
-## 🐛 Known Limitations
+**Production alternative:** Replace with:
+- JWT tokens
+- Session cookies
+- OAuth (Google, GitHub, etc.)
+- Magic links
 
-- No real payment processing (mock checkout only)
-- No user authentication (demo user only)
-- No product inventory management
-- No order persistence (receipts not saved)
-- Single currency support (USD)
-- No image uploads (placeholder URLs)
+#### 🗄️ Database Choice
+**SQLite** via Prisma ORM provides:
+- Zero configuration
+- File-based (no server needed)
+- Perfect for local development
+- Easy to migrate to PostgreSQL/MySQL later
 
-## 📸 Screenshots
+**Migration path:**
+```javascript
+// Just change DATABASE_URL in .env
+DATABASE_URL="postgresql://user:pass@localhost:5432/db"
+```
 
-Screenshots can be added to `/frontend/public/screenshots/`:
+#### 🧪 Testing Strategy
+**Separate test database** ensures tests never interfere with development data:
+- `dev.db` - Your seeded products (untouched by tests)
+- `test.db` - Auto-created for each test run
 
-- `home.png` - Product grid
-- `cart.png` - Shopping cart
-- `checkout.png` - Checkout form
-- `receipt.png` - Order receipt
+**Coverage:**
+- Backend: API integration tests + service unit tests
+- Frontend: Component tests + user interaction tests
+- Total: 28 tests covering critical paths
+
+#### 🖼️ Image Handling
+Product images use **Unsplash** URLs with optimized parameters:
+```
+https://images.unsplash.com/photo-ID?w=400&h=400&fit=crop
+```
+
+**Fallback:** If Unsplash fails, displays placeholder image
+
+**Production:** Replace with:
+- CDN (Cloudinary, Imgix)
+- S3 + CloudFront
+- Your own image server
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+#### Port Already in Use
+```bash
+# Error: Port 4000 or 5173 already in use
+# Solution: Kill the process or use different ports
+
+# Windows
+netstat -ano | findstr :4000
+taskkill /PID <PID> /F
+
+# Mac/Linux
+lsof -ti:4000 | xargs kill -9
+```
+
+#### Database Errors
+```bash
+# Error: Table does not exist
+# Solution: Run migrations
+
+cd backend
+npx prisma migrate dev
+npm run seed
+```
+
+#### Tests Affecting Development Data
+```bash
+# This shouldn't happen anymore (we use test.db)
+# But if it does, reseed:
+
+cd backend
+npm run seed
+```
+
+#### Images Not Loading
+1. Check backend is running on port 4000
+2. Check CORS is configured for localhost:5173
+3. Check browser console for errors
+4. Try clearing browser cache
+
+#### Module Not Found
+```bash
+# Solution: Reinstall dependencies
+
+rm -rf node_modules package-lock.json
+npm install
+
+cd backend
+rm -rf node_modules package-lock.json
+npm install
+
+cd ../frontend
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Getting Help
+
+1. Check [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for detailed guides
+2. Check [TEST-DATABASE.md](./TEST-DATABASE.md) for test database info
+3. Open an issue on GitHub
+4. Review the [API Documentation](#-api-documentation) below
+
+## 🚧 Known Limitations
+
+This is a demo/screening project with intentional limitations:
+
+- ❌ No real payment processing (mock checkout only)
+- ❌ No user authentication (uses demo user)
+- ❌ No product inventory tracking
+- ❌ No order history/persistence
+- ❌ Single currency support (USD only)
+- ❌ No image uploads (uses Unsplash URLs)
+- ❌ No email notifications
+- ❌ No admin dashboard
+
+**These are features you could add to extend the project!**
+
+## 📸 Adding Your Screenshots
+
+To make your README more attractive, add screenshots to `/frontend/public/screenshots/`:
+
+| File | Description | Recommended Size |
+|------|-------------|------------------|
+| `banner.png` | Hero/banner image | 1200x400px |
+| `home.png` | Product catalog | 1200x800px |
+| `cart.png` | Shopping cart with items | 1200x800px |
+| `checkout.png` | Checkout form | 1200x800px |
+| `receipt.png` | Order receipt modal | 1200x800px |
+
+**How to capture:**
+1. Run the app: `npm run dev`
+2. Open http://localhost:5173
+3. Use browser DevTools (F12) → Toggle device toolbar
+4. Set viewport to 1200x800
+5. Take screenshots (Win+Shift+S or Cmd+Shift+4)
+6. Save to `frontend/public/screenshots/`
+
+Once added, they'll automatically display in this README!
 
 ## 🤝 Contributing
 
