@@ -35,6 +35,17 @@ function CartItem({ item }) {
 
   return (
     <div className="cart-item">
+      {item.image && (
+        <div className="cart-item-image">
+          <img 
+            src={item.image} 
+            alt={item.name}
+            onError={(e) => {
+              e.target.src = 'https://via.placeholder.com/80x80?text=' + encodeURIComponent(item.name.substring(0, 10));
+            }}
+          />
+        </div>
+      )}
       <div className="cart-item-info">
         <h3>{item.name}</h3>
         <p className="cart-item-price">{formatCurrency(item.price * 100)}</p>

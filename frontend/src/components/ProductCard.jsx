@@ -25,7 +25,13 @@ function ProductCard({ product }) {
   return (
     <div className="product-card">
       <div className="product-image">
-        <img src={product.image} alt={product.name} />
+        <img 
+          src={product.image} 
+          alt={product.name}
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/400x400?text=' + encodeURIComponent(product.name);
+          }}
+        />
       </div>
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>

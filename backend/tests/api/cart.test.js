@@ -50,6 +50,7 @@ describe('Cart API', () => {
       expect(response.body.items.length).toBe(1);
       expect(response.body.items[0].qty).toBe(2);
       expect(response.body.items[0].productId).toBe(productId);
+      expect(response.body.items[0]).toHaveProperty('image');
       expect(response.body.total).toBe(100.0);
       expect(response.body.itemCount).toBe(2);
     });

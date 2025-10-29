@@ -149,6 +149,8 @@ vibe-commerce-cart/
 
 ## 🧪 Testing
 
+**Important:** Tests use a separate test database (`test.db`) to avoid interfering with your development data.
+
 ### Run all tests
 
 ```bash
@@ -159,10 +161,12 @@ npm test
 
 ```bash
 cd backend
-npm test              # Run once
+npm test              # Run once (auto-initializes test DB)
 npm run test:watch    # Watch mode
 npm run test:coverage # With coverage
 ```
+
+**Note:** The test database is automatically created and migrated before each test run. Your development database (`dev.db`) and seeded products remain untouched.
 
 ### Frontend tests (Vitest + RTL)
 
@@ -203,11 +207,13 @@ Fetch all available products.
     "name": "Wireless Headphones",
     "price": 79.99,
     "priceCents": 7999,
-    "image": "https://via.placeholder.com/300x300?text=Headphones",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
     "description": "Premium wireless headphones with noise cancellation"
   }
 ]
 ```
+
+**Note:** Returns 10 products seeded from the database with high-quality Unsplash images.
 
 #### `GET /api/cart`
 

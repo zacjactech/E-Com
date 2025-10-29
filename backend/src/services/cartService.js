@@ -49,6 +49,7 @@ function formatCart(cart) {
     productId: item.productId,
     name: item.product.name,
     price: centsToDollars(item.product.priceCents),
+    image: item.product.image,
     qty: item.qty,
     lineTotal: centsToDollars(item.product.priceCents * item.qty),
   }));

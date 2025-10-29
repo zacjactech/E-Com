@@ -2,6 +2,8 @@ import ProductCard from './ProductCard';
 import '../styles/ProductGrid.css';
 
 function ProductGrid({ products, loading, error }) {
+  console.log('ProductGrid render:', { productsCount: products?.length, loading, error });
+
   if (loading) {
     return (
       <div className="product-grid">

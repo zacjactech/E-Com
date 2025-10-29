@@ -12,6 +12,14 @@ describe('Products API', () => {
       data: [
         { name: 'Product 1', priceCents: 1000, image: 'img1.jpg' },
         { name: 'Product 2', priceCents: 2000, image: 'img2.jpg' },
+        { name: 'Product 3', priceCents: 3000, image: 'img3.jpg' },
+        { name: 'Product 4', priceCents: 4000, image: 'img4.jpg' },
+        { name: 'Product 5', priceCents: 5000, image: 'img5.jpg' },
+        { name: 'Product 6', priceCents: 6000, image: 'img6.jpg' },
+        { name: 'Product 7', priceCents: 7000, image: 'img7.jpg' },
+        { name: 'Product 8', priceCents: 8000, image: 'img8.jpg' },
+        { name: 'Product 9', priceCents: 9000, image: 'img9.jpg' },
+        { name: 'Product 10', priceCents: 10000, image: 'img10.jpg' },
       ],
     });
   });
@@ -25,7 +33,7 @@ describe('Products API', () => {
       const response = await request(app).get('/api/products').expect(200);
 
       expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBe(2);
+      expect(response.body.length).toBe(10);
       expect(response.body[0]).toHaveProperty('id');
       expect(response.body[0]).toHaveProperty('name');
       expect(response.body[0]).toHaveProperty('price');

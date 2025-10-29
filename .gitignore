@@ -18,6 +18,8 @@ build/
 *.db-journal
 backend/prisma/dev.db
 backend/prisma/dev.db-journal
+backend/prisma/test.db
+backend/prisma/test.db-journal
 
 # Logs
 logs/
@@ -41,3 +43,8 @@ coverage/
 
 # OS
 Thumbs.db
+
+# Temporary files
+test-cart.js
+check-db.js
+debug-*.html

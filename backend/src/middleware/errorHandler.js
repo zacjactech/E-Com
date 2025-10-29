@@ -1,8 +1,10 @@
 const { AppError } = require('../utils/errors');
 
 function errorHandler(err, req, res, next) {
-  // Log error for debugging
-  console.error('Error:', err);
+  // Log error for debugging (skip in test environment to reduce noise)
+  if (process.env.NODE_ENV !== 'test') {
+    console.error('Error:', err);
+  }
 
   // Handle known application errors
   if (err instanceof AppError) {

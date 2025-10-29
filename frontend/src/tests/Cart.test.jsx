@@ -24,6 +24,7 @@ describe('Cart', () => {
           productId: 1,
           name: 'Test Product',
           price: 50,
+          image: 'https://via.placeholder.com/80x80',
           qty: 2,
           lineTotal: 100,
         },

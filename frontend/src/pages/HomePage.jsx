@@ -16,9 +16,11 @@ function HomePage() {
     try {
       setLoading(true);
       const data = await fetchProducts();
+      console.log('Fetched products:', data.length, data);
       setProducts(data);
       setError(null);
     } catch (err) {
+      console.error('Error loading products:', err);
       setError(err.message);
     } finally {
       setLoading(false);
