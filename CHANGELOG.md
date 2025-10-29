@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-10-29
+
+### Added
+- **Email receipt system** - Automatic email confirmation sent after checkout
+  - Beautiful HTML email template with order details
+  - Plain text fallback for email clients
+  - Development mode logs emails to console
+  - Production mode supports SMTP (Gmail, SendGrid, etc.)
+  - Non-blocking email sending (doesn't fail checkout if email fails)
+- Email service with Nodemailer
+- SMTP configuration in .env
+- Email documentation in README
+
 ## [1.1.0] - 2025-10-29
 
 ### Added

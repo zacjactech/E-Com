@@ -1,5 +1,6 @@
 const { getCart, clearCart } = require('./cartService');
 const { ValidationError } = require('../utils/errors');
+const { sendReceiptEmail } = require('./emailService');
 
 /**
  * Process checkout
@@ -21,7 +22,13 @@ async function processCheckout(userId, name, email) {
     timestamp: new Date().toISOString(),
   };
 
+  // Clear cart before sending email
   await clearCart(userId);
+
+  // Send receipt email (non-blocking, don't fail checkout if email fails)
+  sendReceiptEmail(receipt).catch((error) => {
+    console.error('Email send failed:', error);
+  });
 
   return receipt;
 }

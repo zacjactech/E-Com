@@ -30,6 +30,7 @@ A modern, full-stack shopping cart application built with React, Node.js, and SQ
 - 🖼️ **Product Thumbnails** - Visual cart items with 80x80px images
 - 💰 **Real-time Totals** - Automatic calculation of subtotals and totals
 - 📦 **Mock Checkout** - Complete order flow with receipt generation
+- 📧 **Email Receipts** - Automatic email confirmation sent to customer
 - 💾 **Persistent State** - Cart data saved in SQLite database
 - 📱 **Responsive Design** - Mobile-first UI that works on all devices
 
@@ -392,11 +393,51 @@ PORT=4000
 DATABASE_URL="file:./dev.db"
 NODE_ENV=development
 USE_FAKE_STORE_API=false
+
+# Email Configuration (Optional)
+SMTP_HOST=
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=
+SMTP_PASS=
+SMTP_FROM="Vibe Commerce <noreply@vibecommerce.com>"
 ```
 
+**Configuration Options:**
 - `PORT`: Backend server port (default: 4000)
 - `DATABASE_URL`: Prisma database connection
-- `USE_FAKE_STORE_API`: Toggle to use external Fake Store API for products (bonus feature)
+- `USE_FAKE_STORE_API`: Toggle to use external Fake Store API for products
+- `SMTP_*`: Email configuration (optional, see Email Setup below)
+
+### Email Setup (Optional)
+
+**Development Mode (Default):**
+- Emails are logged to the console
+- No SMTP configuration needed
+- Perfect for testing
+
+**Production Mode:**
+To send real emails, configure SMTP settings in `.env`:
+
+```env
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+SMTP_FROM="Vibe Commerce <noreply@vibecommerce.com>"
+```
+
+**Popular SMTP Providers:**
+- **Gmail:** smtp.gmail.com (requires app password)
+- **SendGrid:** smtp.sendgrid.net
+- **Mailgun:** smtp.mailgun.org
+- **AWS SES:** email-smtp.region.amazonaws.com
+
+**Gmail Setup:**
+1. Enable 2-factor authentication
+2. Generate app password: https://myaccount.google.com/apppasswords
+3. Use app password in `SMTP_PASS`
 
 ### Fake Store API Integration (Bonus)
 
@@ -411,6 +452,7 @@ Set `USE_FAKE_STORE_API=true` in backend `.env` to fetch products from `https://
 ✅ Cart management (add/remove/update quantities)  
 ✅ Real-time total calculations  
 ✅ Mock checkout with receipt generation  
+✅ Email receipt delivery (development mode logs to console)  
 ✅ Persistent cart state (SQLite)  
 ✅ Responsive mobile-first design  
 ✅ Loading states and error handling  
